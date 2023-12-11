@@ -1,5 +1,6 @@
 package menu.controller;
 
+import menu.domain.Coaches;
 import menu.view.InputView;
 import menu.view.OutputView;
 
@@ -20,6 +21,11 @@ public class MenuRecommender {
     }
 
     private void run() {
+        Coaches coaches = getCoach();
+    }
+
+    private Coaches getCoach() {
+        String coachNames = inputView.getCoachNames();
 
     }
 }
