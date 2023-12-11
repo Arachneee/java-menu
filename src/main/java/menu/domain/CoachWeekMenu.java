@@ -1,6 +1,9 @@
 package menu.domain;
 
+import java.util.Collections;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 public class CoachWeekMenu {
 
@@ -12,5 +15,9 @@ public class CoachWeekMenu {
 
     public static CoachWeekMenu create(final Coaches coaches, final WeekCategory weekCategory) {
         return new CoachWeekMenu(coaches.makeWeekMenu(weekCategory));
+    }
+
+    public Set<Entry<Coach, Map<Week, Menu>>> getEntries() {
+        return Collections.unmodifiableSet(menuTable.entrySet());
     }
 }

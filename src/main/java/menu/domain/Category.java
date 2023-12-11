@@ -2,6 +2,7 @@ package menu.domain;
 
 import static menu.domain.Menu.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -61,6 +62,7 @@ public enum Category {
             PIZZA,
             PANINI));
 
+    private static final String HEADER = "카테고리";
     private final String value;
     private final int order;
     private final List<Menu> menus;
@@ -76,6 +78,16 @@ public enum Category {
                 .filter(value -> value.order == order)
                 .findAny()
                 .orElseThrow(() -> new CategoryException(ErrorMessage.INVALID_CATETORY_ORDER));
+    }
+
+    public static List<String> getValues() {
+        List<String> values = new ArrayList<>();
+        values.add(HEADER);
+        values.addAll(Arrays.stream(values())
+                .map(category -> category.value)
+                .collect(Collectors.toList()));
+
+        return values;
     }
 
     public String getValue() {

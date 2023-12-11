@@ -9,6 +9,7 @@ import menu.domain.Coaches;
 import menu.domain.Menu;
 import menu.domain.RandomNumberGenerator;
 import menu.domain.WeekCategory;
+import menu.dto.RecommendResultDto;
 import menu.view.InputView;
 import menu.view.OutputView;
 
@@ -22,19 +23,19 @@ public class MenuRecommender {
         this.outputView = outputView;
     }
 
-    public void start() {
+    public void run() {
         outputView.printStart();
-        run();
-        outputView.printEnd();
-    }
 
-    private void run() {
         List<CoachName> coachNames = getCoachNames();
         Coaches coaches = Coaches.from(coachNames);
+
         getUnableMenus(coaches);
+
         WeekCategory weekCategory = WeekCategory.createByRandomNumber(new RandomNumberGenerator());
         CoachWeekMenu coachWeekMenu = CoachWeekMenu.create(coaches, weekCategory);
 
+        RecommendResultDto recommendResultDto = RecommendResultDto.from(coachWeekMenu);
+        outputView.printResult(recommendResultDto);
     }
 
     private List<CoachName> getCoachNames() {

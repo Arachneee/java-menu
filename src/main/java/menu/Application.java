@@ -7,6 +7,6 @@ import menu.view.OutputView;
 public class Application {
     public static void main(String[] args) {
         MenuRecommender menuRecommender = new MenuRecommender(new InputView(), new OutputView());
-        menuRecommender.start();
+        menuRecommender.run();
     }
 }
