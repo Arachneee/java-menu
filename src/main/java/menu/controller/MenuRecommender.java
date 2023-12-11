@@ -1,5 +1,7 @@
 package menu.controller;
 
+import java.util.List;
+import menu.domain.CoachName;
 import menu.domain.Coaches;
 import menu.view.InputView;
 import menu.view.OutputView;
@@ -21,11 +23,12 @@ public class MenuRecommender {
     }
 
     private void run() {
-        Coaches coaches = getCoach();
+        List<CoachName> coachNames = getCoachNames();
+        Coaches coaches = Coaches.from(coachNames);
     }
 
-    private Coaches getCoach() {
-        String coachNames = inputView.getCoachNames();
-
+    private List<CoachName> getCoachNames() {
+        String coachNameSource = inputView.getCoachNames();
+        return Parser.convertToCoachNames(coachNameSource);
     }
 }

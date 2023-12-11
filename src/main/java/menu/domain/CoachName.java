@@ -14,6 +14,10 @@ public class CoachName {
     }
 
     public static CoachName from(final String name) {
+        if (name.isBlank()) {
+            throw new CoachException(ErrorMessage.BLANK_COACH_NAME);
+        }
+
         if (name.length() < MIN_LENGTH || name.length() > MAX_LENGTH) {
             throw new CoachException(ErrorMessage.INVALID_COACH_NAME_LENGTH);
         }
