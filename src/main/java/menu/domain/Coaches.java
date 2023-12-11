@@ -30,4 +30,7 @@ public class Coaches {
                 .collect(Collectors.toList()));
     }
 
+    public List<Coach> getCoaches() {
+        return coaches;
+    }
 }
