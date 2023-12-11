@@ -4,6 +4,7 @@ import static menu.domain.Menu.*;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import menu.exception.CategoryException;
 import menu.exception.ErrorMessage;
 
@@ -79,5 +80,11 @@ public enum Category {
 
     public String getValue() {
         return value;
+    }
+
+    public List<String> getMenus() {
+        return menus.stream()
+                .map(Menu::get)
+                .collect(Collectors.toList());
     }
 }

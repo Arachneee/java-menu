@@ -67,4 +67,8 @@ public enum Menu {
             throw new MenuException(ErrorMessage.INVALID_MENU_NAME);
         });
     }
+
+    public String get() {
+        return name;
+    }
 }

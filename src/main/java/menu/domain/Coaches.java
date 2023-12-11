@@ -1,6 +1,7 @@
 package menu.domain;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import menu.exception.CoachException;
 import menu.exception.ErrorMessage;
@@ -28,6 +29,16 @@ public class Coaches {
         return new Coaches(coachNames.stream()
                 .map(Coach::from)
                 .collect(Collectors.toList()));
+    }
+
+    public Map<Coach, Map<Week, Menu>> makeWeekMenu(final WeekCategory weekCategory) {
+        return coaches.stream()
+                .collect(Collectors.toMap(coach -> coach,
+                        coach -> createCoachMenu(coach, weekCategory)));
+    }
+
+    private Map<Week, Menu> createCoachMenu(final Coach coach, final WeekCategory weekCategory) {
+        return weekCategory.createMenu(coach);
     }
 
     public List<Coach> getCoaches() {
