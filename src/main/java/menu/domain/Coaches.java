@@ -1,5 +1,6 @@
 package menu.domain;
 
+import camp.nextstep.edu.missionutils.Randoms;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -31,17 +32,35 @@ public class Coaches {
                 .collect(Collectors.toList()));
     }
 
-    public Map<Coach, Map<Week, Menu>> makeWeekMenu(final WeekCategory weekCategory) {
-        return coaches.stream()
-                .collect(Collectors.toMap(coach -> coach,
-                        coach -> createCoachMenu(coach, weekCategory)));
-    }
-
-    private Map<Week, Menu> createCoachMenu(final Coach coach, final WeekCategory weekCategory) {
-        return weekCategory.createMenu(coach);
-    }
-
     public List<Coach> getCoaches() {
         return coaches;
+    }
+
+    public Map<Coach, Menu> createMenu(final Category category, final Map<Week, Map<Coach, Menu>> weekMenu) {
+        return coaches.stream()
+                .collect(Collectors.toMap(coach -> coach,
+                        coach -> getMenu(category, weekMenu, coach)));
+    }
+
+    private Menu getMenu(final Category category, final Map<Week, Map<Coach, Menu>> weekMenu, final Coach coach) {
+        List<String> menus = category.getMenus();
+
+        while (true) {
+            String menuName = Randoms.shuffle(menus).get(0);
+            Menu menu = Menu.from(menuName);
+
+            if (coach.canNotEat(menu) || isDuplicate(menu, coach, weekMenu)) {
+                continue;
+            }
+
+            return menu;
+        }
+    }
+
+    private boolean isDuplicate(final Menu menu, final Coach coach, final Map<Week, Map<Coach, Menu>> weekMenu) {
+        return weekMenu.values().stream()
+                .map(menus -> menus.get(coach))
+                .collect(Collectors.toList())
+                .contains(menu);
     }
 }

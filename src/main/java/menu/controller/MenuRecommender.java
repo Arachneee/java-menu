@@ -34,7 +34,7 @@ public class MenuRecommender {
         WeekCategory weekCategory = WeekCategory.createByRandomNumber(new RandomNumberGenerator());
         CoachWeekMenu coachWeekMenu = CoachWeekMenu.create(coaches, weekCategory);
 
-        RecommendResultDto recommendResultDto = RecommendResultDto.from(coachWeekMenu);
+        RecommendResultDto recommendResultDto = RecommendResultDto.of(weekCategory, coachWeekMenu);
         outputView.printResult(recommendResultDto);
     }
 

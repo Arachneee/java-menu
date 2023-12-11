@@ -1,8 +1,51 @@
 package menu.domain;
 
-import static menu.domain.Menu.*;
+import static menu.domain.Menu.BAGUETTE;
+import static menu.domain.Menu.BANH_MI;
+import static menu.domain.Menu.BIBIMBAP;
+import static menu.domain.Menu.BLACK_BEAN_NOODLES;
+import static menu.domain.Menu.BULGOGI;
+import static menu.domain.Menu.BUN_CHA;
+import static menu.domain.Menu.DONGPO_PORK;
+import static menu.domain.Menu.FRENCH_TOAST;
+import static menu.domain.Menu.FRIED_NOODLES;
+import static menu.domain.Menu.GNOCCHI;
+import static menu.domain.Menu.GRATIN;
+import static menu.domain.Menu.GYUDON;
+import static menu.domain.Menu.HIGH_RICE;
+import static menu.domain.Menu.JJAMPPONG;
+import static menu.domain.Menu.KALGUKSU;
+import static menu.domain.Menu.KATSUDON;
+import static menu.domain.Menu.KHAO_PAD;
+import static menu.domain.Menu.KIMBAP;
+import static menu.domain.Menu.KIMCHI_SOUP;
+import static menu.domain.Menu.KKANPUNGGI;
+import static menu.domain.Menu.LASAGNA;
+import static menu.domain.Menu.MAPO_TOFU;
+import static menu.domain.Menu.MISO_SOUP;
+import static menu.domain.Menu.NASI_GORENG;
+import static menu.domain.Menu.OKONOMIYAKI;
+import static menu.domain.Menu.ONIGIRI;
+import static menu.domain.Menu.PAD_THAI;
+import static menu.domain.Menu.PANINI;
+import static menu.domain.Menu.PINEAPPLE_FRIED_RICE;
+import static menu.domain.Menu.PIZZA;
+import static menu.domain.Menu.QUICHE;
+import static menu.domain.Menu.RAMEN;
+import static menu.domain.Menu.RED_PEPPER_JAPCHAE;
+import static menu.domain.Menu.RICE_NOODLES;
+import static menu.domain.Menu.SOY_BEAN_PASTE_SOUP;
+import static menu.domain.Menu.SPAGHETTI;
+import static menu.domain.Menu.SSAMBAP;
+import static menu.domain.Menu.STIR_FRIED_PORK;
+import static menu.domain.Menu.SUSHI;
+import static menu.domain.Menu.SWEET_AND_SOUR_PORK;
+import static menu.domain.Menu.TOMATOES_STIR_FRIED_EGGS;
+import static menu.domain.Menu.TOM_YUM_GOONG;
+import static menu.domain.Menu.TTEOKBOKKI;
+import static menu.domain.Menu.UDON;
+import static menu.domain.Menu.VIETNAMESE_SSAM;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -62,7 +105,7 @@ public enum Category {
             PIZZA,
             PANINI));
 
-    private static final String HEADER = "카테고리";
+    public static final String HEADER = "카테고리";
     private final String value;
     private final int order;
     private final List<Menu> menus;
@@ -78,16 +121,6 @@ public enum Category {
                 .filter(value -> value.order == order)
                 .findAny()
                 .orElseThrow(() -> new CategoryException(ErrorMessage.INVALID_CATETORY_ORDER));
-    }
-
-    public static List<String> getValues() {
-        List<String> values = new ArrayList<>();
-        values.add(HEADER);
-        values.addAll(Arrays.stream(values())
-                .map(category -> category.value)
-                .collect(Collectors.toList()));
-
-        return values;
     }
 
     public String getValue() {

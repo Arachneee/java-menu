@@ -32,7 +32,7 @@ public class Coach {
         return coachName.getName();
     }
 
-    public boolean canEat(final Menu menu) {
-        return !unableMenu.contains(menu);
+    public boolean canNotEat(final Menu menu) {
+        return unableMenu.contains(menu);
     }
 }

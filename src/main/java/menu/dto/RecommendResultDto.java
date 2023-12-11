@@ -5,11 +5,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.stream.Collectors;
-import menu.domain.Category;
 import menu.domain.Coach;
 import menu.domain.CoachWeekMenu;
 import menu.domain.Menu;
 import menu.domain.Week;
+import menu.domain.WeekCategory;
 
 public class RecommendResultDto {
 
@@ -23,16 +23,28 @@ public class RecommendResultDto {
         this.coachMenuDtos = coachMenuDtos;
     }
 
-    public static RecommendResultDto from(final CoachWeekMenu coachWeekMenu) {
-        return new RecommendResultDto(Week.getValuesWithHeader(), Category.getValues(), createCoachMenuDto(coachWeekMenu));
+    public static RecommendResultDto of(final WeekCategory weekCategory, final CoachWeekMenu coachWeekMenu) {
+        return new RecommendResultDto(Week.getValuesWithHeader(), weekCategory.getCateCory(), createCoachMenuDto(coachWeekMenu));
     }
 
     private static List<CoachMenuDto> createCoachMenuDto(final CoachWeekMenu coachWeekMenu) {
-        Set<Entry<Coach, Map<Week, Menu>>> coachMenus = coachWeekMenu.getEntries();
+        Set<Coach> coaches = coachWeekMenu.getCoaches();
 
-        return coachMenus.stream()
-                .map(entry -> CoachMenuDto.of(entry.getKey(), entry.getValue()))
+        Set<Entry<Week, Map<Coach, Menu>>> coachMenus = coachWeekMenu.getEntries();
+
+        List<Map<Coach, Menu>> collect = coachMenus.stream()
+                .sorted((entry1, entry2) -> entry1.getKey().getOrder() - entry2.getKey().getOrder())
+                .map(Entry::getValue)
                 .collect(Collectors.toList());
+
+        return coaches.stream()
+                .map(coach -> CoachMenuDto.of(coach, collect.stream()
+                        .map(menus -> menus.get(coach))
+                        .collect(Collectors.toList())))
+                .collect(Collectors.toList());
+
+
+
     }
 
     public List<String> getWeeks() {

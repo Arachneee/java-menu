@@ -27,12 +27,12 @@ public class OutputView {
 
     private void printWeek(List<String> weeks) {
         System.out.println(weeks.stream()
-                .collect(Collectors.joining(" | ", "[", "]")));
+                .collect(Collectors.joining(" | ", "[ ", " ]")));
     }
 
     private void printCategory(List<String> categorys) {
         System.out.println(categorys.stream()
-                .collect(Collectors.joining(" | ", "[", "]")));
+                .collect(Collectors.joining(" | ", "[ ", " ]")));
     }
 
     private void printCoachMenus(List<CoachMenuDto> coachMenuDtos) {
@@ -41,14 +41,14 @@ public class OutputView {
 
     private void printCoachMenu(List<String> coachMenuDto) {
         System.out.println(coachMenuDto.stream()
-                .collect(Collectors.joining(" | ", "[", "]")));
+                .collect(Collectors.joining(" | ", "[ ", " ]")));
     }
 
 
     private enum Response {
         START("점심 메뉴 추천을 시작합니다."),
         END("추천을 완료했습니다."),
-        RESULT("메뉴 추천 결과입니다.");
+        RESULT(System.lineSeparator() + "메뉴 추천 결과입니다.");
 
         private final String value;
 

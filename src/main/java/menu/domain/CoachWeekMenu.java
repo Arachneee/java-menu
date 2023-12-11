@@ -7,17 +7,23 @@ import java.util.Set;
 
 public class CoachWeekMenu {
 
-    private final Map<Coach, Map<Week, Menu>> menuTable;
+    private final Map<Week, Map<Coach, Menu>> menuTable;
 
-    private CoachWeekMenu(Map<Coach, Map<Week, Menu>> menuTable) {
+    private CoachWeekMenu(Map<Week, Map<Coach, Menu>> menuTable) {
         this.menuTable = menuTable;
     }
 
     public static CoachWeekMenu create(final Coaches coaches, final WeekCategory weekCategory) {
-        return new CoachWeekMenu(coaches.makeWeekMenu(weekCategory));
+        CoachWeekMenu coachWeekMenu = new CoachWeekMenu(weekCategory.makeWeekMenu(coaches));
+        return coachWeekMenu;
     }
 
-    public Set<Entry<Coach, Map<Week, Menu>>> getEntries() {
+    public Set<Entry<Week, Map<Coach, Menu>>> getEntries() {
         return Collections.unmodifiableSet(menuTable.entrySet());
+    }
+
+    public Set<Coach> getCoaches() {
+        Map<Coach, Menu> coachMenuMap = menuTable.get(Week.MONDAY);
+        return coachMenuMap.keySet();
     }
 }

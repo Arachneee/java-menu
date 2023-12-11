@@ -1,11 +1,12 @@
 package menu.domain;
 
-import camp.nextstep.edu.missionutils.Randoms;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class WeekCategory {
 
@@ -42,29 +43,22 @@ public class WeekCategory {
                 .count() >= MAX_CATEGORY_COUNT;
     }
 
-    public Map<Week, Menu> createMenu(final Coach coach) {
-        Map<Week, Menu> weekMenu = new HashMap<>();
-        categoryOfWeek.forEach((key, value) -> weekMenu.put(key, getMenu(value, coach, weekMenu)));
+    public List<String> getCateCory() {
+        List<String> values = new ArrayList<>();
+        values.add(Category.HEADER);
+        values.addAll(categoryOfWeek.entrySet().stream()
+                .sorted((entry1, entry2) -> {
+                    return entry1.getKey().getOrder() - entry2.getKey().getOrder();
+                })
+                .map(entry -> entry.getValue().getValue())
+                .collect(Collectors.toList()));
 
+        return values;
+    }
+
+    public Map<Week, Map<Coach, Menu>> makeWeekMenu(final Coaches coaches) {
+        Map<Week, Map<Coach, Menu>> weekMenu = new HashMap<>();
+        categoryOfWeek.forEach((key, value) -> weekMenu.put(key, coaches.createMenu(value, weekMenu)));
         return weekMenu;
-    }
-
-    private Menu getMenu(final Category category, final Coach coach, final Map<Week, Menu> weekMenu) {
-        List<String> menus = category.getMenus();
-
-        while (true) {
-            String menuName = Randoms.shuffle(menus).get(0);
-            Menu menu = Menu.from(menuName);
-
-            if (coach.canEat(menu) || isDuplicate(menu, weekMenu)) {
-                continue;
-            }
-
-            return menu;
-        }
-    }
-
-    private boolean isDuplicate(final Menu menu, final Map<Week, Menu> weekMenu) {
-        return weekMenu.containsValue(menu);
     }
 }

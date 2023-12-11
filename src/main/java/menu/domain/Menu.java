@@ -25,7 +25,7 @@ public enum Menu {
     KALGUKSU("칼국수"),
     BULGOGI("불고기"),
     TTEOKBOKKI("떡볶이"),
-    STIR_FRIED_PORK("제육복 "),
+    STIR_FRIED_PORK("제육볶음"),
     KKANPUNGGI("깐풍기"),
     FRIED_NOODLES("볶음면"),
     DONGPO_PORK("동파육"),
