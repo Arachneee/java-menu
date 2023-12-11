@@ -6,6 +6,8 @@ import menu.domain.Coach;
 import menu.domain.CoachName;
 import menu.domain.Coaches;
 import menu.domain.Menu;
+import menu.domain.RandomNumberGenerator;
+import menu.domain.WeekCategory;
 import menu.view.InputView;
 import menu.view.OutputView;
 
@@ -29,6 +31,7 @@ public class MenuRecommender {
         List<CoachName> coachNames = getCoachNames();
         Coaches coaches = Coaches.from(coachNames);
         getUnableMenus(coaches);
+        WeekCategory weekCategory = WeekCategory.createByRandomNumber(new RandomNumberGenerator());
 
     }
 
