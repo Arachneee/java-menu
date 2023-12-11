@@ -44,5 +44,7 @@ public class MenuRecommender {
     private void getUnableMenu(final Coach coach) {
         String unableMenuSource = inputView.enterUnableMenus(coach.getName());
         List<Menu> unableMenus = Parser.convertToMenus(unableMenuSource);
+
+        coach.addUnableMenuList(unableMenus);
     }
 }

@@ -1,9 +1,11 @@
 package menu.controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import menu.domain.CoachName;
+import menu.domain.Menu;
 import menu.exception.CoachException;
 import menu.exception.ErrorMessage;
 
@@ -27,4 +29,17 @@ public final class Parser {
                 .collect(Collectors.toList());
     }
 
+    public static List<Menu> convertToMenus(final String source) {
+        if (source.isBlank()) {
+            return new ArrayList<>();
+        }
+
+        return createMenus(source);
+    }
+
+    private static List<Menu> createMenus(final String source) {
+        return Arrays.stream(source.split(SEPARATOR))
+                .map(Menu::from)
+                .collect(Collectors.toList());
+    }
 }

@@ -1,5 +1,12 @@
 package menu.domain;
 
+import static java.util.stream.Collectors.toMap;
+
+import java.util.Arrays;
+import java.util.Map;
+import menu.exception.ErrorMessage;
+import menu.exception.MenuException;
+
 public enum Menu {
     GYUDON("규동"),
     UDON("우동"),
@@ -47,9 +54,17 @@ public enum Menu {
     PIZZA("피자"),
     PANINI("파니니");
 
-    private final String value;
+    private static final Map<String, Menu> menus= Arrays.stream(values())
+            .collect(toMap(menu -> menu.name, menu -> menu));
+    private final String name;
 
-    Menu(String value) {
-        this.value = value;
+    Menu(String name) {
+        this.name = name;
+    }
+
+    public static Menu from(String name) {
+        return menus.computeIfAbsent(name, key -> {
+            throw new MenuException(ErrorMessage.INVALID_MENU_NAME);
+        });
     }
 }
