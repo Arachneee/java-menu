@@ -31,4 +31,8 @@ public class Coach {
     public String getName() {
         return coachName.getName();
     }
+
+    public boolean canEat(final Menu menu) {
+        return !unableMenu.contains(menu);
+    }
 }

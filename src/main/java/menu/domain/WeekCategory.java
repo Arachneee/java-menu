@@ -1,8 +1,12 @@
 package menu.domain;
 
+import camp.nextstep.edu.missionutils.Randoms;
 import java.util.Arrays;
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 public class WeekCategory {
 
@@ -25,15 +29,39 @@ public class WeekCategory {
             final EnumMap<Week, Category> weekCategory) {
         while (true) {
             Category selectedCategory = Category.orderOf(numberGenerator.generate());
-            long count = weekCategory.values().stream()
-                    .filter(category -> category.equals(selectedCategory))
-                    .count();
-
-            if (count >= MAX_CATEGORY_COUNT) {
+            if (isOverCount(weekCategory, selectedCategory)) {
                 continue;
             }
+
             return selectedCategory;
         }
 
+    }
+
+    private static boolean isOverCount(final EnumMap<Week, Category> weekCategory, final Category selectedCategory) {
+        return weekCategory.values().stream()
+                .filter(category -> category.equals(selectedCategory))
+                .count() >= MAX_CATEGORY_COUNT;
+    }
+
+    public Map<Week, Menu> createMenu(final Coach coach) {
+        return categoryOfWeek.entrySet().stream()
+                .collect(Collectors.toMap(Entry::getKey,
+                        entry -> createRandomMenu(entry.getValue(), coach)));
+    }
+
+    private Menu createRandomMenu(final Category category, final Coach coach) {
+        List<String> menus = category.getMenus();
+
+        while (true) {
+            String menuName = Randoms.shuffle(menus).get(0);
+            Menu menu = Menu.from(menuName);
+
+            if (coach.canEat(menu)) {
+                continue;
+            }
+
+            return menu;
+        }
     }
 }
