@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.function.Supplier;
 import menu.domain.Coach;
 import menu.domain.CoachName;
+import menu.domain.CoachWeekMenu;
 import menu.domain.Coaches;
 import menu.domain.Menu;
 import menu.domain.RandomNumberGenerator;
@@ -32,6 +33,7 @@ public class MenuRecommender {
         Coaches coaches = Coaches.from(coachNames);
         getUnableMenus(coaches);
         WeekCategory weekCategory = WeekCategory.createByRandomNumber(new RandomNumberGenerator());
+        CoachWeekMenu coachWeekMenu = CoachWeekMenu.create(coaches, weekCategory);
 
     }
 
