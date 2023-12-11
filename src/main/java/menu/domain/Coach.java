@@ -22,7 +22,7 @@ public class Coach {
 
     public void addUnableMenuList(final List<Menu> menus) {
         if (menus.size() > MAX_UNABLE_MENU_COUNT) {
-            throw new MenuException(ErrorMessage.INVALID_MENU_COUNT)
+현            throw new MenuException(ErrorMessage.INVALID_MENU_COUNT);
         }
 
         unableMenu.addAll(menus);

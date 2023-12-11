@@ -12,6 +12,10 @@ public class OutputView {
         System.out.println(lineSeparator() + Response.END.value);
     }
 
+    public void printError(final String message) {
+        System.out.println(message);
+    }
+
 
     private enum Response {
         START("점심 메뉴 추천을 시작합니다."),

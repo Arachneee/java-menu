@@ -1,6 +1,7 @@
 package menu.controller;
 
 import java.util.List;
+import java.util.function.Supplier;
 import menu.domain.Coach;
 import menu.domain.CoachName;
 import menu.domain.Coaches;
@@ -32,8 +33,10 @@ public class MenuRecommender {
     }
 
     private List<CoachName> getCoachNames() {
-        String coachNameSource = inputView.enterCoachNames();
-        return Parser.convertToCoachNames(coachNameSource);
+        return getByRoof(() -> {
+            String coachNameSource = inputView.enterCoachNames();
+            return Parser.convertToCoachNames(coachNameSource);
+        });
     }
 
     private void getUnableMenus(final Coaches coaches) {
@@ -42,9 +45,21 @@ public class MenuRecommender {
     }
 
     private void getUnableMenu(final Coach coach) {
-        String unableMenuSource = inputView.enterUnableMenus(coach.getName());
-        List<Menu> unableMenus = Parser.convertToMenus(unableMenuSource);
+        List<Menu> unableMenus = getByRoof(() -> {
+            String unableMenuSource = inputView.enterUnableMenus(coach.getName());
+            return Parser.convertToMenus(unableMenuSource);
+        });
 
         coach.addUnableMenuList(unableMenus);
+    }
+
+    private <T> T getByRoof(final Supplier<T> supplier) {
+        while (true) {
+            try {
+                return supplier.get();
+            } catch (IllegalArgumentException exception) {
+                outputView.printError(exception.getMessage());
+            }
+        }
     }
 }
