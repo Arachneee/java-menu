@@ -15,5 +15,11 @@ public class MenuRecommender {
 
     public void start() {
         outputView.printStart();
+        run();
+        outputView.printEnd();
+    }
+
+    private void run() {
+
     }
 }
