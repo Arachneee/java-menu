@@ -26,8 +26,7 @@ public class MenuRecommender {
     public void run() {
         outputView.printStart();
 
-        List<CoachName> coachNames = getCoachNames();
-        Coaches coaches = Coaches.from(coachNames);
+        Coaches coaches = getCoaches();
 
         getUnableMenus(coaches);
 
@@ -38,10 +37,11 @@ public class MenuRecommender {
         outputView.printResult(recommendResultDto);
     }
 
-    private List<CoachName> getCoachNames() {
+    private Coaches getCoaches() {
         return getByRoof(() -> {
             String coachNameSource = inputView.enterCoachNames();
-            return Parser.convertToCoachNames(coachNameSource);
+            List<CoachName> coachNames = Parser.convertToCoachNames(coachNameSource);
+            return Coaches.from(coachNames);
         });
     }
 

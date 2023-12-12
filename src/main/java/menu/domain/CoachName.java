@@ -13,7 +13,7 @@ public class CoachName {
         this.name = name;
     }
 
-    public static CoachName from(final String name) {
+    public static CoachName from(String name) {
         if (name.isBlank()) {
             throw new CoachException(ErrorMessage.BLANK_COACH_NAME);
         }
